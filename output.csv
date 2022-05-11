@@ -1,5 +1,5 @@
 Variant SKU,Command,"""Variant Metafield: my_fields.zaloga [list.single_line_text_field]""","""Variant Metafield: my_fields.zalogape-01 [number_integer]""","""Variant Metafield: my_fields.zalogape-03 [number_integer]""","""Variant Metafield: my_fields.zalogape-04 [number_integer]""","""Variant Metafield: my_fields.zalogape-05 [number_integer]""","""Variant Metafield: my_fields.zalogape-06 [number_integer]""","""Variant Metafield: my_fields.zalogape-07 [number_integer]"""
-9010159990146-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana - Slovenska""]",1,2,0,0,0,0
-9010159990153-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana - Slovenska"", ""Novo Mesto""]",3,4,0,0,5,0
-9010159990207-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana - Slovenska"", ""Novo Mesto""]",1,1,0,0,1,0
-9010159990214-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana - Slovenska""]",3,4,0,0,0,0
+9010159990146-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana – Slovenska""]",1,2,0,0,0,0
+9010159990153-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana – Slovenska"", ""Novo Mesto""]",3,4,0,0,5,0
+9010159990207-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana – Slovenska"", ""Novo Mesto""]",1,88,0,0,11,0
+9010159990214-45,MERGE,"[""Ljubljana - Celovška"", ""Novo Mesto""]",3,0,0,0,77,0
