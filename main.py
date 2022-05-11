@@ -18,16 +18,6 @@ file_csv = jsonObject['file_csv']
 
 path_log = file_log
 
-# if Path(path_log).is_file() and Path(path_log).suffix == '.csv':
-#     print('Log-file OK!..')
-# else:
-#     print('File not exist, check the file path!')
-#     with open("log.csv", "w", newline='', encoding="utf-8") as file:
-#         writer = csv.writer(file, delimiter=";")
-#         writer.writerow(
-#             'test'
-#         )
-
 df_wh = pd.read_csv('Warehouses.csv', sep=',', header=0)
 df_wh.set_index('WarehouseID', inplace=True)
 my_listtt = df_wh["WarehouseName"].tolist()
@@ -36,30 +26,9 @@ my_r = []
 for r in df_wh.index:
     my_r.append(int(r.split('-')[1]))
 
-cols = [
-    'Variant SKU',
-    'Command',
-    '"Variant Metafield: my_fields.zaloga [list.single_line_text_field]"',
-    '"Variant Metafield: my_fields.zalogape-01 [number_integer]"',
-    '"Variant Metafield: my_fields.zalogape-03 [number_integer]"',
-    '"Variant Metafield: my_fields.zalogape-04 [number_integer]"',
-    '"Variant Metafield: my_fields.zalogape-05 [number_integer]"',
-    '"Variant Metafield: my_fields.zalogape-06 [number_integer]"',
-    '"Variant Metafield: my_fields.zalogape-07 [number_integer]"'
-]
-
+cols = []
 rows = []
 
-"""
-Warehouse ID	Warehouse Name
-ZalogaPE-01	    Ljubljana - Celovška
-ZalogaPE-03	    Ljubljana – Slovenska
-ZalogaPE-04	    Ribnica
-ZalogaPE-05	    Idrija
-ZalogaPE-06	    Novo Mesto
-ZalogaPE-07	    Kranj
-"""
-# list_wh = ['"Ljubljana - Celovška"', '', '"Ljubljana - Slovenska"', '"Ribnica"', '"Idrija"', '"Novo Mesto"', '"Kranj"']
 list_wh_add = []
 list_count = []
 
@@ -111,23 +80,7 @@ for www in ttt:
 
 df = pd.DataFrame(rows)#, columns=cols)
 
-df.to_csv(file_csv, index=False, sep = ',')#, quoting=csv.QUOTE_NONE, escapechar='"') #quoting=csv.QUOTE_NONE,, escapechar=','
-#df.to_csv('output.csv', index=False, sep = '\t', quoting=csv.QUOTE_NONE, escapechar='#') #quoting=csv.QUOTE_NONE,, escapechar=','
-#df.to_csv('output.csv', index=False, sep=',', quoting=csv.QUOTE_NONE, escapechar='*') #quoting=csv.QUOTE_NONE,, escapechar=','
-# df.to_csv('output.csv', index=False, sep=',', escapechar='*', quoting=csv.QUOTE_NONE, quotechar='#') #quoting=csv.QUOTE_NONE,, escapechar=','
-
-
-# Variant SKU,Command,"""Variant Metafield: my_fields.zaloga [list.single_line_text_field]""","""Variant Metafield: my_fields.zalogape-01 [number_integer]""","""Variant Metafield: my_fields.zalogape-03 [number_integer]""","""Variant Metafield: my_fields.zalogape-04 [number_integer]""","""Variant Metafield: my_fields.zalogape-05 [number_integer]""","""Variant Metafield: my_fields.zalogape-06 [number_integer]""","""Variant Metafield: my_fields.zalogape-07 [number_integer]"""
-# 9010159990146-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana - Slovenska""]",1,2,0,0,0,0
-# 9010159990153-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana - Slovenska"", ""Novo Mesto""]",3,4,0,0,5,0
-# 9010159990207-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana - Slovenska"", ""Novo Mesto""]",1,1,0,0,1,0
-# 9010159990214-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana - Slovenska""]",3,4,0,0,0,0
-
-# Variant SKU,Command,"""Variant Metafield: my_fields.zaloga [list.single_line_text_field]""","""Variant Metafield: my_fields.zalogape-01 [number_integer]""","""Variant Metafield: my_fields.zalogape-03 [number_integer]""","""Variant Metafield: my_fields.zalogape-04 [number_integer]""","""Variant Metafield: my_fields.zalogape-05 [number_integer]""","""Variant Metafield: my_fields.zalogape-06 [number_integer]""","""Variant Metafield: my_fields.zalogape-07 [number_integer]"""
-# 9010159990146-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana – Slovenska""]",1,2,0,0,0,0
-# 9010159990153-45,MERGE,"[""Ljubljana - Celovška"", ""Ljubljana – Slovenska"", ""Novo Mesto""]",3,4,0,0,5,0
-# 9010159990207-45,MERGE,"[""Ljubljana - Celovška"", ""UA_V-V"", ""UA_UA""]",1,0,0,0,0,0
-# 9010159990214-45,MERGE,"[""Ljubljana - Celovška"", ""Kranj""]",3,0,0,0,0,77
+df.to_csv(file_csv, index=False, sep=',')
 
 def log():
     # time.sleep(1)
