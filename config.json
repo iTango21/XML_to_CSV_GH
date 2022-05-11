@@ -1,0 +1,5 @@
+{
+    "file_log": "./log/log.json",
+    "file_xml": "./in/test.xml",
+    "file_csv": "./out/output.csv"
+}

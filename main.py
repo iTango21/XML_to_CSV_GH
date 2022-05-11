@@ -1,24 +1,40 @@
 import xml.etree.ElementTree as ET
 import csv
 import pandas as pd
-import itertools
-
+import json
 from pathlib import Path
+import time
+from datetime import datetime
 
+start_time = time.time()
+
+with open("config.json") as jsonFile:
+    jsonObject = json.load(jsonFile)
+    jsonFile.close()
+
+file_log = jsonObject['file_log']
+file_xml = jsonObject['file_xml']
+file_csv = jsonObject['file_csv']
+
+path_log = file_log
+
+# if Path(path_log).is_file() and Path(path_log).suffix == '.csv':
+#     print('Log-file OK!..')
+# else:
+#     print('File not exist, check the file path!')
+#     with open("log.csv", "w", newline='', encoding="utf-8") as file:
+#         writer = csv.writer(file, delimiter=";")
+#         writer.writerow(
+#             'test'
+#         )
 
 df_wh = pd.read_csv('Warehouses.csv', sep=',', header=0)
 df_wh.set_index('WarehouseID', inplace=True)
-
 my_listtt = df_wh["WarehouseName"].tolist()
-# print(my_listtt)
 
 my_r = []
 for r in df_wh.index:
     my_r.append(int(r.split('-')[1]))
-# print(my_r)
-#
-# breakpoint()
-
 
 cols = [
     'Variant SKU',
@@ -47,7 +63,7 @@ ZalogaPE-07	    Kranj
 list_wh_add = []
 list_count = []
 
-tree = ET.parse("test.xml")
+tree = ET.parse(file_xml)
 root = tree.getroot()
 
 ttt = tree.findall('Artikel')
@@ -61,17 +77,6 @@ for www in ttt:
             sezona = jjj.find("Sezona").text
 
             if (ean is not None) & (sezona is not None):
-                # for t in range(1, 8):
-                #     if t != 2:
-                #         try:
-                #             zalogape = (jjj.find(f"ZalogaPE-0{t}")).text
-                #             if zalogape != '':
-                #                 list_wh_add.append(list_wh[t-1:t])
-                #                 list_count.append(zalogape)
-                #             else:
-                #                 list_count.append(0)
-                #         except:
-                #             list_count.append(0)
                 for s in df_wh.index:
                     try:
                         zalogape = (jjj.find(s)).text
@@ -90,7 +95,6 @@ for www in ttt:
                 print(list_wh_add)
                 lst_txt = str(list_wh_add).replace("['", "[").replace("']", "]").replace("', '", ", ").strip()
                 print(f'{lst_txt}\n')
-                #["Ljubljana - Celovška", "Ljubljana - Slovenska"]
                 rows.append({'Variant SKU': f'{ean}-{sezona}',
                              'Command': 'MERGE',
                              '"Variant Metafield: my_fields.zaloga [list.single_line_text_field]"': f'{lst_txt}',
@@ -107,7 +111,7 @@ for www in ttt:
 
 df = pd.DataFrame(rows)#, columns=cols)
 
-df.to_csv('output.csv', index=False, sep = ',')#, quoting=csv.QUOTE_NONE, escapechar='"') #quoting=csv.QUOTE_NONE,, escapechar=','
+df.to_csv(file_csv, index=False, sep = ',')#, quoting=csv.QUOTE_NONE, escapechar='"') #quoting=csv.QUOTE_NONE,, escapechar=','
 #df.to_csv('output.csv', index=False, sep = '\t', quoting=csv.QUOTE_NONE, escapechar='#') #quoting=csv.QUOTE_NONE,, escapechar=','
 #df.to_csv('output.csv', index=False, sep=',', quoting=csv.QUOTE_NONE, escapechar='*') #quoting=csv.QUOTE_NONE,, escapechar=','
 # df.to_csv('output.csv', index=False, sep=',', escapechar='*', quoting=csv.QUOTE_NONE, quotechar='#') #quoting=csv.QUOTE_NONE,, escapechar=','
@@ -125,10 +129,27 @@ df.to_csv('output.csv', index=False, sep = ',')#, quoting=csv.QUOTE_NONE, escape
 # 9010159990207-45,MERGE,"[""Ljubljana - Celovška"", ""UA_V-V"", ""UA_UA""]",1,0,0,0,0,0
 # 9010159990214-45,MERGE,"[""Ljubljana - Celovška"", ""Kranj""]",3,0,0,0,0,77
 
+def log():
+    # time.sleep(1)
+    finish_time = time.time() - start_time
+    a = f"TIME: {finish_time}"
+    cur_time = datetime.now().strftime("%d.%m.%Y %H:%M")
+    b = f"TIME_now: {cur_time}"
+
+    log_data = []
+    log_data.append(
+        {
+            'start_time': start_time,
+            'finish_time': finish_time,
+            'cur_time': b
+        }
+    )
+    with open(file_log, 'w', encoding='utf-8') as file:
+       json.dump(log_data, file, indent=4, ensure_ascii=False)
 
 
 def main():
-    pass
+    log()
 
 
 if __name__ == "__main__":
