@@ -52,18 +52,27 @@ for www in ttt:
 
                         w = int(s.split('-')[1])
                         if zalogape != '':
-                            qqq = f'"{df_wh.loc[s]["WarehouseName"]}"'
-                            #print(f'{s} --> {qqq}')
-                            list_wh_add.append(qqq)
-                            list_count.append(zalogape)
+                            if zalogape == '-1':
+                                list_count.append(0)
+                                qqq = []
+                                print(len(qqq))
+                            else:
+                                qqq = f'"{df_wh.loc[s]["WarehouseName"]}"'
+                                # print(f'{s} --> {qqq}')
+                                list_wh_add.append(qqq)
+                                list_count.append(zalogape)
                         else:
                             list_count.append(0)
                     except:
                         list_count.append(0)
 
-                print(list_wh_add)
-                lst_txt = str(list_wh_add).replace("['", "[").replace("']", "]").replace("', '", ", ").strip()
-                print(f'{lst_txt}\n')
+                if len(qqq) == 0:
+                    lst_txt = '""'
+                    print(lst_txt)
+                else:
+                    #print(list_wh_add)
+                    lst_txt = str(list_wh_add).replace("['", "[").replace("']", "]").replace("', '", ", ").strip()
+                    #print(f'{lst_txt}\n')
                 rows.append({'Variant SKU': f'{ean}-{sezona}',
                              'Command': 'MERGE',
                              '"Variant Metafield: my_fields.zaloga [list.single_line_text_field]"': f'{lst_txt}',
